@@ -19,7 +19,8 @@ The twist? Many of the best VGM files were written for the **SN76489** "PSG" chi
 * 🎵 **Interactive file browser** — browse `.vgm` / `.vgz` files with the arrow keys
 * 🎹 **Instant playback** — no conversion step, plays directly from the file
 * 🥁 **Authentic percussion** — kick drums and snares that sound like hardware, not white noise
-* 🔄 **Loop support** — VGM loop points are honored automatically
+* 🔄 **Loop mode** — seamlessly repeat the current track without reloading from disk
+* 🔁 **Autoplay mode** — automatically play the next file when the current one ends
 * 📦 **Compressed support** — `.vgz` files decompressed on the fly via zlib
 * ⚡ **Low CPU usage** — ~3–4% on a stock 8 MHz ST, leaving the machine responsive
 
@@ -30,25 +31,14 @@ The twist? Many of the best VGM files were written for the **SN76489** "PSG" chi
 ### Interactive Browser Mode
 Launch the player without arguments to browse your collection:
 
-```
---- mm_vgm Interactive Player ---
-UP/DOWN: Select | ENTER: Play | SPACE: Stop | Q: Quit
----------------------------------------
-    Altered_Beast.vgz
-    Alex_Kidd.vgz
-  > OutRun.vgz
-    Wonder_Boy.vgz
-    Sonic.vgz
----------------------------------------
-Playing: OutRun.vgz
-```
-
-![Interactive Mode](mm_vgm_list.png)
+![BROWSER Mode](mm_vgm_list.png)
 
 ### CLI Mode
-Play a single file directly from the command line:
+Play a single file directly from the command line or by dragging a file onto the TTP:
 
 ![CLI Mode](mm_vgm_cli.png)
+
+> *Note: Filenames containing spaces are fully supported in both CLI and drag-and-drop modes.*
 
 ---
 
@@ -64,7 +54,7 @@ Play a single file directly from the command line:
 ### Installation
 
 1. Copy `mm_vgm.ttp` to a folder containing your VGM/VGZ files.
-2. Double-click `mm_vgm.ttp` in the interactive browser, **or** drag a `.vgm`/`.vgz` file onto it.
+2. Double-click `mm_vgm.ttp` to open the interactive browser, **or** drag a `.vgm`/`.vgz` file onto it for instant playback.
 
 ### Controls
 
@@ -73,8 +63,12 @@ Play a single file directly from the command line:
 | `↑` / `↓` | Navigate file list |
 | `Enter` | Play selected file |
 | `Space` | Stop playback |
+| `L` | Toggle **Loop** mode (repeats current track seamlessly) |
+| `A` | Toggle **Autoplay** mode (plays next file automatically) |
 | `Q` or `Esc` | Quit |
 | *Any key* | Stop playback (CLI mode) |
+
+> **Note:** Loop and Autoplay are mutually exclusive. Enabling one automatically disables the other.
 
 ---
 
@@ -104,8 +98,9 @@ Play a single file directly from the command line:
 ### Cross-compilation (Linux / macOS / WSL)
 
 ```bash
-# Install the m68k-atari-mint toolchain
-# (e.g., from Vincent Rivière's cross-tools or Homebrew)
+# Install the m68k-atari-mint cross-toolchain
+# Recommended: Thorsten Otto's CrossMiNT packages
+# https://tho-otto.m68k.eu/crossmint.php
 
 m68k-atari-mint-gcc -O2 -m68000 mm_vgm.c -o mm_vgm.ttp -lz
 ```
@@ -288,7 +283,7 @@ MIT License — see `LICENSE` file.
 * VGM format by [Valley Bell](https://github.com/vgmrips/vgmplay)
 * SN76489 research by [John Kortink](https://www.zeridajh.org/) and Silicon Heaven
 * YM2149 reference by [bulba.untergrund.net](https://bulba.untergrund.net/elect_e.htm)
-* Cross-compiler by [Vincent Rivière](https://vincent.riviere.free.fr/soft/m68k-atari-mint/)
+* Cross-compiler by [Vincent Rivière](http://vincent.riviere.free.fr/soft/m68k-atari-mint/) and [Thorsten Otto](https://tho-otto.m68k.eu/crossmint.php)
 
 ---
 
