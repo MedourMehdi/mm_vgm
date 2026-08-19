@@ -832,8 +832,10 @@ int main(int argc, char **argv)
 
     /* Exit */
     stop_vgm();
-    // printf("\033e"); /* Restore cursor */
-    // printf("\033E"); /* Clear screen */
+    if (aes_apid < 0){
+        printf("\033e"); /* Restore cursor */
+        printf("\033E"); /* Clear screen */
+    }
     Super(old_ssp);
     aes_leave();
     return 0;
