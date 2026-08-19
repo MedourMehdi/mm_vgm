@@ -34,7 +34,7 @@ Launch the player without arguments to browse your collection:
 ![BROWSER Mode](mm_vgm_list.png)
 
 ### CLI Mode
-Play a single file directly from the command line or by dragging a file onto the TTP:
+Play a single file directly from the command line or by dragging a file onto the PRG:
 
 ![CLI Mode](mm_vgm_cli.png)
 
@@ -53,8 +53,8 @@ Play a single file directly from the command line or by dragging a file onto the
 
 ### Installation
 
-1. Copy `mm_vgm.ttp` to a folder containing your VGM/VGZ files.
-2. Double-click `mm_vgm.ttp` to open the interactive browser, **or** drag a `.vgm`/`.vgz` file onto it for instant playback.
+1. Copy `mm_vgm.prg` to a folder containing your VGM/VGZ files.
+2. Double-click `mm_vgm.prg` to open the interactive browser, **or** drag a `.vgm`/`.vgz` file onto it for instant playback.
 
 ### Controls
 
@@ -102,7 +102,7 @@ Play a single file directly from the command line or by dragging a file onto the
 # Recommended: Thorsten Otto's CrossMiNT packages
 # https://tho-otto.m68k.eu/crossmint.php
 
-m68k-atari-mint-gcc -O2 -m68000 mm_vgm.c -o mm_vgm.ttp -lz
+m68k-atari-mint-gcc -O2 -m68000 mm_vgm.c -o mm_vgm.prg -lz
 ```
 
 ### Native compilation (Atari ST with GCC)
@@ -110,7 +110,7 @@ m68k-atari-mint-gcc -O2 -m68000 mm_vgm.c -o mm_vgm.ttp -lz
 If you have `gcc` installed under FreeMiNT:
 
 ```bash
-gcc -O2 -m68000 mm_vgm.c -o mm_vgm.ttp -lz
+gcc -O2 -m68000 mm_vgm.c -o mm_vgm.prg -lz
 ```
 
 ### Build options
