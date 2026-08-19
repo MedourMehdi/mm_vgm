@@ -44,6 +44,9 @@
 #define TADR_VALUE        251
 #define TIMER_BASE_SAMPLES 45
 
+#define CONTERM (*(volatile uint8_t *)0x484)
+static uint8_t old_conterm;
+
 typedef struct {
     uint16_t sn_tone[4];    /*   0  */
     uint8_t  sn_vol[4];     /*   8  */
@@ -695,6 +698,7 @@ int main(int argc, char **argv)
 
     /* CLI Mode: Single file playback */
     if (argc >= 2) {
+        printf("\033E");   /* clear screen, home cursor */
         printf("\n--- mm_vgm v0.1 CLI Mode ---\n");
 
         /* ── TOS filename reconstruction (spaces in names) ─────────────── */
@@ -737,6 +741,8 @@ int main(int argc, char **argv)
 
     draw_menu(selected, playing, status);
 
+    old_conterm = CONTERM;
+    CONTERM = old_conterm & ~0x01;   /* disable keyclick */
     while (1) {
         /* UI Event Check */
         if (Cconis()) {
@@ -832,6 +838,7 @@ int main(int argc, char **argv)
 
     /* Exit */
     stop_vgm();
+    CONTERM = old_conterm;           /* restore keyclick */
     if (aes_apid < 0){
         printf("\033e"); /* Restore cursor */
         printf("\033E"); /* Clear screen */
