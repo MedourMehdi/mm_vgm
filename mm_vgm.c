@@ -28,8 +28,6 @@
 #include <zlib.h>
 #include <mint/osbind.h>
 
-#include <gem.h>   /* AES/GEM bindings: appl_init, wind_update, form_dial... */
-
 #define YM_SEL  *(volatile uint8_t *)0xFFFF8800
 #define YM_DAT  *(volatile uint8_t *)0xFFFF8802
 
@@ -75,8 +73,6 @@ uint8_t  old_tacr, old_tadr, old_iera, old_imra;
 static uint32_t vgm_data_offset = 0;   /* remembered for seamless loop */
 int loop_mode = 0;
 int autoplay_mode = 0;
-
-static int aes_apid = -1;   /* -1 = no AES, >= 0 = AES present */
 
 __asm__(
     "   .text\n"
@@ -415,31 +411,6 @@ extern void timer_a_isr(void) __asm__("timer_a_isr");
  * ══════════════════════════════════════════════════════════════════════════
  */
 
-static void aes_enter(void)
-{
-    aes_apid = appl_init();
-    if (aes_apid >= 0) {
-        /* We are a GEM .PRG. Lock AES drawing and hide the mouse. */
-        wind_update(BEG_UPDATE);
-        graf_mouse(M_OFF, NULL);
-    }
-}
-
-static void aes_leave(void)
-{
-    if (aes_apid >= 0) {
-        /* Restore mouse */
-        graf_mouse(M_ON, NULL);
-        /* Unlock AES drawing */
-        wind_update(END_UPDATE);
-        /* Force full desktop redraw */
-        short x, y, w, h;
-        wind_get(0, WF_WORKXYWH, &x, &y, &w, &h);
-        form_dial(FMD_FINISH, 0, 0, 0, 0, x, y, w, h);
-        appl_exit();
-    }
-}
-
 static uint32_t read_le32(const uint8_t *p)
 {
     return (uint32_t)p[0] | ((uint32_t)p[1] << 8)
@@ -692,8 +663,6 @@ int start_vgm(const char *filename)
 
 int main(int argc, char **argv)
 {
-    aes_enter();   
-
     void *old_ssp = (void *)Super(0);
 
     /* CLI Mode: Single file playback */
@@ -839,11 +808,8 @@ int main(int argc, char **argv)
     /* Exit */
     stop_vgm();
     CONTERM = old_conterm;           /* restore keyclick */
-    if (aes_apid < 0){
-        printf("\033e"); /* Restore cursor */
-        printf("\033E"); /* Clear screen */
-    }
+    printf("\033e"); /* Restore cursor */
+    printf("\033E"); /* Clear screen */
     Super(old_ssp);
-    aes_leave();
     return 0;
 }
