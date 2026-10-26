@@ -687,7 +687,7 @@ static void gem_open_window(void)
     int16_t dummy_x, dummy_y;
 
     wi_handle = wind_create(wi_kind, xdesk, ydesk, wdesk, hdesk);
-    wind_set_str(wi_handle, WF_NAME, " mm_vgm ");
+    wind_set_str(wi_handle, WF_NAME, " VGM Player ");
 
     wind_open(wi_handle, win_x, win_y, win_w, win_h);
 
